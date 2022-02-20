@@ -12,8 +12,21 @@ struct Prefecture: Hashable {
     var localType: LocalType = .Hokkaido
 }
 
-enum LocalType: CaseIterable {
+enum LocalType: Int, CaseIterable {
     case Hokkaido, Tohoku, Kanto, Chubu, Kinki, Chugoku, Shikoku, Kyushu, Okinawa
+    var name: String {
+        switch self {
+        case .Hokkaido: return "北海道"
+        case .Tohoku: return "東北"
+        case .Kanto: return "関東"
+        case .Chubu: return "中部"
+        case .Kinki: return "近畿"
+        case .Chugoku: return "中国"
+        case .Shikoku: return "四国"
+        case .Kyushu: return "九州"
+        case .Okinawa: return "沖縄"
+        }
+    }
 }
 
 struct Prefectures {
