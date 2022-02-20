@@ -9,7 +9,7 @@ import Foundation
 
 struct Prefecture: Hashable {
     let name: String
-    let localType: LocalType = .Hokkaido
+    var localType: LocalType = .Hokkaido
 }
 
 enum LocalType: CaseIterable {

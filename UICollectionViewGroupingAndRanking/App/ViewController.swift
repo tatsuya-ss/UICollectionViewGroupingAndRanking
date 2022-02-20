@@ -12,15 +12,20 @@ final class ViewController: UIViewController {
     @IBOutlet private weak var collectionView: UICollectionView!
     
     private var dataSource: UICollectionViewDiffableDataSource<LocalType, Prefecture>! = nil
-    private let prefectures = Prefectures().prefectures
+    private var prefectures = Prefectures().prefectures
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configureHierarchy()
         configureDataSource()
+        changeLocalType(item: 1, localType: .Tohoku)
         initialDataSource()
         
+    }
+    
+    private func changeLocalType(item: Int, localType: LocalType) {
+        prefectures[item].localType = localType
     }
     
 }
