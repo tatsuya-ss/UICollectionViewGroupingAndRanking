@@ -16,6 +16,7 @@
 		75B30FCB27C2099E0068B55D /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75B30FC927C2099E0068B55D /* CollectionViewCell.swift */; };
 		75B30FCC27C2099E0068B55D /* CollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75B30FCA27C2099E0068B55D /* CollectionViewCell.xib */; };
 		75B30FCF27C20A820068B55D /* Identifierable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75B30FCE27C20A820068B55D /* Identifierable.swift */; };
+		75B30FD227C21FE40068B55D /* Prefecture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75B30FD127C21FE40068B55D /* Prefecture.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		75B30FC927C2099E0068B55D /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		75B30FCA27C2099E0068B55D /* CollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CollectionViewCell.xib; sourceTree = "<group>"; };
 		75B30FCE27C20A820068B55D /* Identifierable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identifierable.swift; sourceTree = "<group>"; };
+		75B30FD127C21FE40068B55D /* Prefecture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prefecture.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 			isa = PBXGroup;
 			children = (
 				75B30FC827C205F10068B55D /* App */,
+				75B30FD027C21FC90068B55D /* Data */,
 				75B30FB427C1FE090068B55D /* AppDelegate.swift */,
 				75B30FB627C1FE090068B55D /* SceneDelegate.swift */,
 				75B30FBD27C1FE0A0068B55D /* Assets.xcassets */,
@@ -90,6 +93,14 @@
 				75B30FCE27C20A820068B55D /* Identifierable.swift */,
 			);
 			path = Protocol;
+			sourceTree = "<group>";
+		};
+		75B30FD027C21FC90068B55D /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				75B30FD127C21FE40068B55D /* Prefecture.swift */,
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -164,6 +175,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75B30FD227C21FE40068B55D /* Prefecture.swift in Sources */,
 				75B30FCF27C20A820068B55D /* Identifierable.swift in Sources */,
 				75B30FB927C1FE090068B55D /* ViewController.swift in Sources */,
 				75B30FB527C1FE090068B55D /* AppDelegate.swift in Sources */,
