@@ -12,7 +12,7 @@ struct Prefecture: Hashable {
     let localType: LocalType = .Hokkaido
 }
 
-enum LocalType {
+enum LocalType: CaseIterable {
     case Hokkaido, Tohoku, Kanto, Chubu, Kinki, Chugoku, Shikoku, Kyushu, Okinawa
 }
 

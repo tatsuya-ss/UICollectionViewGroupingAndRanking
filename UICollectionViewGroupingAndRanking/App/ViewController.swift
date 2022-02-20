@@ -11,11 +11,7 @@ final class ViewController: UIViewController {
     
     @IBOutlet private weak var collectionView: UICollectionView!
     
-    private enum Section: CaseIterable {
-        case main
-    }
-    
-    private var dataSource: UICollectionViewDiffableDataSource<Section, Prefecture>! = nil
+    private var dataSource: UICollectionViewDiffableDataSource<LocalType, Prefecture>! = nil
     private let prefectures = Prefectures().prefectures
     
     override func viewDidLoad() {
@@ -32,14 +28,14 @@ final class ViewController: UIViewController {
 extension ViewController {
     
     private func initialDataSource() {
-        var snapshot = NSDiffableDataSourceSnapshot<Section, Prefecture>()
-        snapshot.appendSections([.main])
-        snapshot.appendItems(prefectures, toSection: .main)
+        var snapshot = NSDiffableDataSourceSnapshot<LocalType, Prefecture>()
+        LocalType.allCases.forEach { snapshot.appendSections([$0]) }
+        prefectures.forEach { snapshot.appendItems([$0], toSection: $0.localType) }
         dataSource.apply(snapshot, animatingDifferences: true)
     }
     
     private func configureDataSource() {
-        dataSource = UICollectionViewDiffableDataSource<Section, Prefecture>(
+        dataSource = UICollectionViewDiffableDataSource<LocalType, Prefecture>(
             collectionView: collectionView,
             cellProvider: { collectionView, indexPath, itemIdentifier in
                 guard let cell = collectionView.dequeueReusableCell(
