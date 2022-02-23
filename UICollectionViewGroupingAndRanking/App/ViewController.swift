@@ -13,28 +13,15 @@ final class ViewController: UIViewController {
     
     private var dataSource: UICollectionViewDiffableDataSource<LocalType, Prefecture>! = nil
     private var prefectures = Prefectures().prefectures
+    private var prefecturesByRegion: [[Prefecture]] = [[]]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         configureHierarchy()
         configureDataSource()
-        changeLocalType(item: 1, localType: .Tohoku)
         initialDataSource()
         
-    }
-    
-    private func changeLocalType(item: Int, localType: LocalType) {
-        prefectures[item].localType = localType
-    }
-    
-    private func makePrefecturesByRegion() -> [[Prefecture]] {
-        let prefecturesByRegion = LocalType.allCases.map { type in
-            prefectures.filter { prefecture in
-                prefecture.localType == type
-            }
-        }
-        return prefecturesByRegion
     }
     
 }
@@ -42,8 +29,21 @@ final class ViewController: UIViewController {
 // MARK: - func
 extension ViewController {
     
-    private func initialDataSource() {
-        let prefecturesByRegion = makePrefecturesByRegion()
+    private func makePrefecturesByRegion(prefectures: [Prefecture]) -> [[Prefecture]] {
+        let prefecturesByRegion = LocalType.allCases.map { type in
+            prefectures.filter { prefecture in
+                prefecture.localType == type
+            }
+        }
+        self.prefecturesByRegion = prefecturesByRegion
+        return prefecturesByRegion
+    }
+    
+    private func makePrefectures(prefectures: [[Prefecture]]) -> [Prefecture] {
+        prefectures.flatMap { $0 }
+    }
+    
+    private func updateDataSource(prefecturesByRegion: [[Prefecture]]) {
         var snapshot = NSDiffableDataSourceSnapshot<LocalType, Prefecture>()
         LocalType.allCases.forEach {
             snapshot.appendSections([$0])
@@ -54,6 +54,17 @@ extension ViewController {
             }
         }
         dataSource.apply(snapshot, animatingDifferences: true)
+    }
+    
+    private func updatePrefecturesByRegion() {
+        let flatPrefecture = prefecturesByRegion.flatMap { $0 }
+        let updatePrefectures = makePrefecturesByRegion(prefectures: flatPrefecture)
+        updateDataSource(prefecturesByRegion: updatePrefectures)
+    }
+    
+    private func initialDataSource() {
+        let prefecturesByRegion = makePrefecturesByRegion(prefectures: prefectures)
+        updateDataSource(prefecturesByRegion: prefecturesByRegion)
     }
     
     private func configureDataSource() {
@@ -95,7 +106,7 @@ extension ViewController {
             let item = NSCollectionLayoutItem(layoutSize: itemSize)
             item.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
             let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(0.1))
-            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 3)
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 6)
             let section = NSCollectionLayoutSection(group: group)
             
             let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
@@ -115,10 +126,13 @@ extension ViewController {
 extension ViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(indexPath)
         let groupName = LocalType(rawValue: indexPath.section)?.name
         let alert = UIAlertController(title: "\(groupName ?? "不明")からの移動", message: nil, preferredStyle: .alert)
-        LocalType.allCases.forEach { (localType: LocalType) -> Void in alert.addAction(UIAlertAction(title: localType.name, style: .default, handler: { _ in
-            print(localType.name)
+        LocalType.allCases.forEach { (localType: LocalType) -> Void in alert.addAction(UIAlertAction(title: localType.name, style: .default, handler: { [weak self] _ in
+            print(self!.prefecturesByRegion[indexPath.section][indexPath.row])
+            self?.prefecturesByRegion[indexPath.section][indexPath.row].localType = localType
+            self?.updatePrefecturesByRegion()
         })) }
         present(alert, animated: true, completion: nil)
     }
