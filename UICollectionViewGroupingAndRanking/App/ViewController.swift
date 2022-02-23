@@ -12,8 +12,8 @@ final class ViewController: UIViewController {
     @IBOutlet private weak var collectionView: UICollectionView!
     
     private var dataSource: UICollectionViewDiffableDataSource<LocalType, Prefecture>! = nil
-    private var prefectures = Prefectures().prefectures
-    private var prefecturesByRegion: [[Prefecture]] = [[]]
+    private var prefectureManager = PrefectureManager()
+    //    private var prefecturesByRegion: [[Prefecture]] = [[]]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,20 +29,6 @@ final class ViewController: UIViewController {
 // MARK: - func
 extension ViewController {
     
-    private func makePrefecturesByRegion(prefectures: [Prefecture]) -> [[Prefecture]] {
-        let prefecturesByRegion = LocalType.allCases.map { type in
-            prefectures.filter { prefecture in
-                prefecture.localType == type
-            }
-        }
-        self.prefecturesByRegion = prefecturesByRegion
-        return prefecturesByRegion
-    }
-    
-    private func makePrefectures(prefectures: [[Prefecture]]) -> [Prefecture] {
-        prefectures.flatMap { $0 }
-    }
-    
     private func updateDataSource(prefecturesByRegion: [[Prefecture]]) {
         var snapshot = NSDiffableDataSourceSnapshot<LocalType, Prefecture>()
         LocalType.allCases.forEach {
@@ -56,15 +42,10 @@ extension ViewController {
         dataSource.apply(snapshot, animatingDifferences: true)
     }
     
-    private func updatePrefecturesByRegion() {
-        let flatPrefecture = prefecturesByRegion.flatMap { $0 }
-        let updatePrefectures = makePrefecturesByRegion(prefectures: flatPrefecture)
-        updateDataSource(prefecturesByRegion: updatePrefectures)
-    }
-    
     private func initialDataSource() {
-        let prefecturesByRegion = makePrefecturesByRegion(prefectures: prefectures)
+        let prefecturesByRegion = prefectureManager.prefecturesByRegion
         updateDataSource(prefecturesByRegion: prefecturesByRegion)
+        prefectureManager.initialCurrentPrefecture()
     }
     
     private func configureDataSource() {
@@ -130,9 +111,8 @@ extension ViewController: UICollectionViewDelegate {
         let groupName = LocalType(rawValue: indexPath.section)?.name
         let alert = UIAlertController(title: "\(groupName ?? "不明")からの移動", message: nil, preferredStyle: .alert)
         LocalType.allCases.forEach { (localType: LocalType) -> Void in alert.addAction(UIAlertAction(title: localType.name, style: .default, handler: { [weak self] _ in
-            print(self!.prefecturesByRegion[indexPath.section][indexPath.row])
-            self?.prefecturesByRegion[indexPath.section][indexPath.row].localType = localType
-            self?.updatePrefecturesByRegion()
+            guard let updataPrefectures = self?.prefectureManager.updataPrefecture(indexPath: indexPath, localType: localType) else { return }
+            self?.updateDataSource(prefecturesByRegion: updataPrefectures)
         })) }
         present(alert, animated: true, completion: nil)
     }
