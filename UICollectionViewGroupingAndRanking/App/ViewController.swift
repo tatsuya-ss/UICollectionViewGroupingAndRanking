@@ -28,14 +28,31 @@ final class ViewController: UIViewController {
         prefectures[item].localType = localType
     }
     
+    private func makePrefecturesByRegion() -> [[Prefecture]] {
+        let prefecturesByRegion = LocalType.allCases.map { type in
+            prefectures.filter { prefecture in
+                prefecture.localType == type
+            }
+        }
+        return prefecturesByRegion
+    }
+    
 }
 
+// MARK: - func
 extension ViewController {
     
     private func initialDataSource() {
+        let prefecturesByRegion = makePrefecturesByRegion()
         var snapshot = NSDiffableDataSourceSnapshot<LocalType, Prefecture>()
-        LocalType.allCases.forEach { snapshot.appendSections([$0]) }
-        prefectures.forEach { snapshot.appendItems([$0], toSection: $0.localType) }
+        LocalType.allCases.forEach {
+            snapshot.appendSections([$0])
+        }
+        prefecturesByRegion.forEach { prefectures in
+            prefectures.forEach {
+                snapshot.appendItems([$0], toSection: $0.localType)
+            }
+        }
         dataSource.apply(snapshot, animatingDifferences: true)
     }
     
@@ -70,7 +87,6 @@ extension ViewController {
     }
     
     private func createLayout() -> UICollectionViewLayout {
-        
         let config = UICollectionViewCompositionalLayoutConfiguration()
         config.interSectionSpacing = 20
         
@@ -95,6 +111,16 @@ extension ViewController {
     
 }
 
+// MARK: - UICollectionViewDelegate
 extension ViewController: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let groupName = LocalType(rawValue: indexPath.section)?.name
+        let alert = UIAlertController(title: "\(groupName ?? "不明")からの移動", message: nil, preferredStyle: .alert)
+        LocalType.allCases.forEach { (localType: LocalType) -> Void in alert.addAction(UIAlertAction(title: localType.name, style: .default, handler: { _ in
+            print(localType.name)
+        })) }
+        present(alert, animated: true, completion: nil)
+    }
     
 }

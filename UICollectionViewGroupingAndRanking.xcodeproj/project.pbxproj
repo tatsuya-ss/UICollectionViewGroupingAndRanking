@@ -67,6 +67,7 @@
 			isa = PBXGroup;
 			children = (
 				75B30FC827C205F10068B55D /* App */,
+				75B30FD527C2FD060068B55D /* Domain */,
 				75B30FD027C21FC90068B55D /* Data */,
 				75B30FB427C1FE090068B55D /* AppDelegate.swift */,
 				75B30FB627C1FE090068B55D /* SceneDelegate.swift */,
@@ -104,6 +105,13 @@
 				75B30FD127C21FE40068B55D /* Prefecture.swift */,
 			);
 			path = Data;
+			sourceTree = "<group>";
+		};
+		75B30FD527C2FD060068B55D /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Domain;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
