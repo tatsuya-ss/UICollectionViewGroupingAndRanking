@@ -11,17 +11,28 @@ final class ViewController: UIViewController {
     
     @IBOutlet private weak var collectionView: UICollectionView!
     
-    private var dataSource: UICollectionViewDiffableDataSource<LocalType, Prefecture>! = nil
+    private var dataSource: UICollectionViewDiffableDataSource<Group, Prefecture>! = nil
     private var prefectureManager = PrefectureManager()
-    //    private var prefecturesByRegion: [[Prefecture]] = [[]]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupNavigation()
+        prefectureManager.initialCurrentPrefecture()
+        prefectureManager.initialTemporaryGroup()
         configureHierarchy()
         configureDataSource()
         initialDataSource()
         
+    }
+    
+    @IBAction func didTapAddGroupButton(_ sender: Any) {
+        let addGroupVC = AddGroupViewController.instantiate()
+        addGroupVC.makeGroup(createGroup: { [weak self] group in
+            let updataPrefectures = self?.prefectureManager.addGroups(group: group)
+            self?.updateDataSource(prefecturesByRegion: updataPrefectures ?? [[]])
+        })
+        present(addGroupVC, animated: true, completion: nil)
     }
     
 }
@@ -30,26 +41,26 @@ final class ViewController: UIViewController {
 extension ViewController {
     
     private func updateDataSource(prefecturesByRegion: [[Prefecture]]) {
-        var snapshot = NSDiffableDataSourceSnapshot<LocalType, Prefecture>()
-        LocalType.allCases.forEach {
+        var snapshot = NSDiffableDataSourceSnapshot<Group, Prefecture>()
+        let group = prefectureManager.temporaryGroups
+        group.forEach {
             snapshot.appendSections([$0])
         }
         prefecturesByRegion.forEach { prefectures in
             prefectures.forEach {
-                snapshot.appendItems([$0], toSection: $0.localType)
+                snapshot.appendItems([$0], toSection: $0.group)
             }
         }
         dataSource.apply(snapshot, animatingDifferences: true)
     }
     
     private func initialDataSource() {
-        let prefecturesByRegion = prefectureManager.prefecturesByRegion
+        let prefecturesByRegion = prefectureManager.prefecturesByGroup
         updateDataSource(prefecturesByRegion: prefecturesByRegion)
-        prefectureManager.initialCurrentPrefecture()
     }
     
     private func configureDataSource() {
-        dataSource = UICollectionViewDiffableDataSource<LocalType, Prefecture>(
+        dataSource = UICollectionViewDiffableDataSource<Group, Prefecture>(
             collectionView: collectionView,
             cellProvider: { collectionView, indexPath, itemIdentifier in
                 guard let cell = collectionView.dequeueReusableCell(
@@ -62,8 +73,8 @@ extension ViewController {
             })
         
         let supplementaryRegistration = UICollectionView.SupplementaryRegistration<TitleSupplementaryView>(elementKind: "header-element-kind") { supplementaryView, elementKind, indexPath in
-            let sectionKind = LocalType(rawValue: indexPath.section)
-            supplementaryView.label.text = sectionKind?.name
+            let groupName = self.prefectureManager.temporaryGroups[indexPath.section].name
+            supplementaryView.label.text = groupName
         }
         
         dataSource.supplementaryViewProvider = { view, kind, index in
@@ -101,17 +112,24 @@ extension ViewController {
         return layout
     }
     
+    private func setupNavigation() {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .systemGray6
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+    }
+    
 }
 
 // MARK: - UICollectionViewDelegate
 extension ViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath)
-        let groupName = LocalType(rawValue: indexPath.section)?.name
-        let alert = UIAlertController(title: "\(groupName ?? "不明")からの移動", message: nil, preferredStyle: .alert)
-        LocalType.allCases.forEach { (localType: LocalType) -> Void in alert.addAction(UIAlertAction(title: localType.name, style: .default, handler: { [weak self] _ in
-            guard let updataPrefectures = self?.prefectureManager.updataPrefecture(indexPath: indexPath, localType: localType) else { return }
+        let groupName = prefectureManager.temporaryGroups[indexPath.section].name
+        let alert = UIAlertController(title: "\(groupName)からの移動", message: nil, preferredStyle: .alert)
+        prefectureManager.temporaryGroups.forEach { (group: Group) -> Void in alert.addAction(UIAlertAction(title: group.name, style: .default, handler: { [weak self] _ in
+            guard let updataPrefectures = self?.prefectureManager.updataPrefecture(indexPath: indexPath, group: group) else { return }
             self?.updateDataSource(prefecturesByRegion: updataPrefectures)
         })) }
         present(alert, animated: true, completion: nil)
