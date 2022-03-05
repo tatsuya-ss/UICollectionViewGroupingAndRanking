@@ -12,7 +12,7 @@ final class ViewController: UIViewController {
     @IBOutlet private weak var collectionView: UICollectionView!
     
     private var dataSource: UICollectionViewDiffableDataSource<Group, Prefecture>! = nil
-    private var prefectureManager = PrefectureManager()
+    private var prefectureManager = PrefectureUseCase()
     private var isEditRanking: Bool = false
     
     override func viewDidLoad() {

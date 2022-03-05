@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		754411CB27D35B0700DCC20B /* PrefectureData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754411CA27D35B0700DCC20B /* PrefectureData.swift */; };
+		754411CD27D3606500DCC20B /* PrefectureRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754411CC27D3606500DCC20B /* PrefectureRepositoryImpl.swift */; };
+		754411CF27D3641500DCC20B /* Prefecture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754411CE27D3641500DCC20B /* Prefecture.swift */; };
+		754411D127D3648E00DCC20B /* PrefectureRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754411D027D3648E00DCC20B /* PrefectureRepository.swift */; };
 		75B30FB527C1FE090068B55D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75B30FB427C1FE090068B55D /* AppDelegate.swift */; };
 		75B30FB727C1FE090068B55D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75B30FB627C1FE090068B55D /* SceneDelegate.swift */; };
 		75B30FB927C1FE090068B55D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75B30FB827C1FE090068B55D /* ViewController.swift */; };
@@ -16,12 +20,16 @@
 		75B30FCB27C2099E0068B55D /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75B30FC927C2099E0068B55D /* CollectionViewCell.swift */; };
 		75B30FCC27C2099E0068B55D /* CollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 75B30FCA27C2099E0068B55D /* CollectionViewCell.xib */; };
 		75B30FCF27C20A820068B55D /* Identifierable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75B30FCE27C20A820068B55D /* Identifierable.swift */; };
-		75B30FD227C21FE40068B55D /* Prefecture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75B30FD127C21FE40068B55D /* Prefecture.swift */; };
+		75B30FD227C21FE40068B55D /* PrefectureUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75B30FD127C21FE40068B55D /* PrefectureUseCase.swift */; };
 		75B30FD427C2329E0068B55D /* TitleSupplementaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75B30FD327C2329E0068B55D /* TitleSupplementaryView.swift */; };
 		75EAA0CB27CB0DD800AFAB88 /* AddGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75EAA0CA27CB0DD800AFAB88 /* AddGroupViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		754411CA27D35B0700DCC20B /* PrefectureData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefectureData.swift; sourceTree = "<group>"; };
+		754411CC27D3606500DCC20B /* PrefectureRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefectureRepositoryImpl.swift; sourceTree = "<group>"; };
+		754411CE27D3641500DCC20B /* Prefecture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prefecture.swift; sourceTree = "<group>"; };
+		754411D027D3648E00DCC20B /* PrefectureRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefectureRepository.swift; sourceTree = "<group>"; };
 		75B30FB127C1FE090068B55D /* UICollectionViewGroupingAndRanking.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UICollectionViewGroupingAndRanking.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		75B30FB427C1FE090068B55D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		75B30FB627C1FE090068B55D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -33,7 +41,7 @@
 		75B30FC927C2099E0068B55D /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		75B30FCA27C2099E0068B55D /* CollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CollectionViewCell.xib; sourceTree = "<group>"; };
 		75B30FCE27C20A820068B55D /* Identifierable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identifierable.swift; sourceTree = "<group>"; };
-		75B30FD127C21FE40068B55D /* Prefecture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prefecture.swift; sourceTree = "<group>"; };
+		75B30FD127C21FE40068B55D /* PrefectureUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefectureUseCase.swift; sourceTree = "<group>"; };
 		75B30FD327C2329E0068B55D /* TitleSupplementaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleSupplementaryView.swift; sourceTree = "<group>"; };
 		75EAA0CA27CB0DD800AFAB88 /* AddGroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGroupViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -105,7 +113,8 @@
 		75B30FD027C21FC90068B55D /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				75B30FD127C21FE40068B55D /* Prefecture.swift */,
+				754411CA27D35B0700DCC20B /* PrefectureData.swift */,
+				754411CC27D3606500DCC20B /* PrefectureRepositoryImpl.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -113,6 +122,9 @@
 		75B30FD527C2FD060068B55D /* Domain */ = {
 			isa = PBXGroup;
 			children = (
+				75B30FD127C21FE40068B55D /* PrefectureUseCase.swift */,
+				754411CE27D3641500DCC20B /* Prefecture.swift */,
+				754411D027D3648E00DCC20B /* PrefectureRepository.swift */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -197,11 +209,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				75B30FD227C21FE40068B55D /* Prefecture.swift in Sources */,
+				754411CB27D35B0700DCC20B /* PrefectureData.swift in Sources */,
+				75B30FD227C21FE40068B55D /* PrefectureUseCase.swift in Sources */,
 				75B30FCF27C20A820068B55D /* Identifierable.swift in Sources */,
+				754411CF27D3641500DCC20B /* Prefecture.swift in Sources */,
 				75B30FB927C1FE090068B55D /* ViewController.swift in Sources */,
 				75B30FD427C2329E0068B55D /* TitleSupplementaryView.swift in Sources */,
+				754411D127D3648E00DCC20B /* PrefectureRepository.swift in Sources */,
 				75EAA0CB27CB0DD800AFAB88 /* AddGroupViewController.swift in Sources */,
+				754411CD27D3606500DCC20B /* PrefectureRepositoryImpl.swift in Sources */,
 				75B30FB527C1FE090068B55D /* AppDelegate.swift in Sources */,
 				75B30FCB27C2099E0068B55D /* CollectionViewCell.swift in Sources */,
 				75B30FB727C1FE090068B55D /* SceneDelegate.swift in Sources */,
