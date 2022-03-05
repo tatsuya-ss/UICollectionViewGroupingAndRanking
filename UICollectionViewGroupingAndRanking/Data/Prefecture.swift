@@ -9,30 +9,12 @@ import Foundation
 
 struct Prefecture: Hashable {
     let name: String
-    var localType: LocalType = .Hokkaido
     var group: Group
 }
 
 struct Group: Hashable {
     var ID: String
     var name: String
-}
-
-enum LocalType: Int, CaseIterable {
-    case Hokkaido, Tohoku, Kanto, Chubu, Kinki, Chugoku, Shikoku, Kyushu, Okinawa
-    var name: String {
-        switch self {
-        case .Hokkaido: return "北海道"
-        case .Tohoku: return "東北"
-        case .Kanto: return "関東"
-        case .Chubu: return "中部"
-        case .Kinki: return "近畿"
-        case .Chugoku: return "中国"
-        case .Shikoku: return "四国"
-        case .Kyushu: return "九州"
-        case .Okinawa: return "沖縄"
-        }
-    }
 }
 
 struct PrefectureManager {
@@ -54,24 +36,12 @@ struct PrefectureManager {
             }
         }
     }
-
+    
     private var currentPrefectures: [[Prefecture]] = [[]]
     var temporaryGroups: [Group] = []
     
     func getCurrentPrefecture(index: IndexPath) -> Prefecture {
         currentPrefectures[index.section][index.item]
-    }
-    
-    mutating func addGroups(group: Group) -> [[Prefecture]] {
-        temporaryGroups.append(group)
-        let currentPrefecturesFlatMepped = currentPrefectures.flatMap { $0 }
-        let updataPrefecture =  temporaryGroups.map { group in
-            currentPrefecturesFlatMepped.filter { prefecture in
-                prefecture.group == group
-            }
-        }
-        currentPrefectures = updataPrefecture
-        return currentPrefectures
     }
     
     mutating func initialCurrentPrefecture() {
@@ -82,8 +52,19 @@ struct PrefectureManager {
         groups.forEach { temporaryGroups.append($0) }
     }
     
+    mutating func addGroups(group: Group) -> [[Prefecture]] {
+        temporaryGroups.append(group)
+        updateCurrentPrefectures()
+        return currentPrefectures
+    }
+    
     mutating func updataPrefecture(indexPath: IndexPath, group: Group) ->  [[Prefecture]] {
         currentPrefectures[indexPath.section][indexPath.row].group = group
+        updateCurrentPrefectures()
+        return currentPrefectures
+    }
+    
+    private mutating func updateCurrentPrefectures() {
         let currentPrefecturesFlatMepped = currentPrefectures.flatMap { $0 }
         let updataPrefecture =  temporaryGroups.map { group in
             currentPrefecturesFlatMepped.filter { prefecture in
@@ -91,6 +72,5 @@ struct PrefectureManager {
             }
         }
         currentPrefectures = updataPrefecture
-        return currentPrefectures
     }
 }
