@@ -13,6 +13,7 @@ final class ViewController: UIViewController {
     
     private var dataSource: UICollectionViewDiffableDataSource<Group, Prefecture>! = nil
     private var prefectureManager = PrefectureManager()
+    private var isEditRanking: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +34,13 @@ final class ViewController: UIViewController {
             self?.updateDataSource(prefecturesByRegion: updataPrefectures ?? [[]])
         })
         present(addGroupVC, animated: true, completion: nil)
+    }
+    
+    @IBAction func didTapEditRankingButton(_ sender: Any) {
+        isEditRanking.toggle()
+        let isHidden = isEditRanking ? false : true
+        let currentPrefectures = prefectureManager.changeIsHiddenAndReturnPrefectures(isHidden: isHidden)
+        updateDataSource(prefecturesByRegion: currentPrefectures)
     }
     
 }
@@ -68,7 +76,7 @@ extension ViewController {
                     for: indexPath
                 ) as? CollectionViewCell
                 else { fatalError("CollectionViewCellが見つかりませんでした。") }
-                cell.configure(title: itemIdentifier.name)
+                cell.configure(title: itemIdentifier.name, isHiddenRank: itemIdentifier.isHiddenRanking)
                 return cell
             })
         

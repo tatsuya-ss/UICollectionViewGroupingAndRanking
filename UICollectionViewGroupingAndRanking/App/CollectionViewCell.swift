@@ -12,14 +12,16 @@ extension CollectionViewCell: Identifiable { }
 final class CollectionViewCell: UICollectionViewCell {
 
     @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var rankLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         layer.cornerRadius = 5
     }
     
-    func configure(title: String) {
+    func configure(title: String, isHiddenRank: Bool) {
         titleLabel.text = title
+        rankLabel.isHidden = isHiddenRank
     }
 
 }

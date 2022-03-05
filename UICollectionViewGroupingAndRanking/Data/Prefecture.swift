@@ -10,11 +10,19 @@ import Foundation
 struct Prefecture: Hashable {
     let name: String
     var group: Group
+    var isHiddenRanking: Bool = false
+}
+
+private extension Prefecture {
+    mutating func changeIsHidden(isHidden: Bool) {
+        isHiddenRanking = isHidden
+    }
 }
 
 struct Group: Hashable {
     var ID: String
     var name: String
+    var rank: Int?
 }
 
 struct PrefectureManager {
@@ -42,6 +50,15 @@ struct PrefectureManager {
     
     func getCurrentPrefecture(index: IndexPath) -> Prefecture {
         currentPrefectures[index.section][index.item]
+    }
+    
+    mutating func changeIsHiddenAndReturnPrefectures(isHidden: Bool) -> [[Prefecture]] {
+        for prefecturesCount in 0..<currentPrefectures.count {
+            for prefectureCount in 0..<currentPrefectures[prefecturesCount].count {
+                currentPrefectures[prefecturesCount][prefectureCount].changeIsHidden(isHidden: isHidden)
+            }
+        }
+        return currentPrefectures
     }
     
     mutating func initialCurrentPrefecture() {

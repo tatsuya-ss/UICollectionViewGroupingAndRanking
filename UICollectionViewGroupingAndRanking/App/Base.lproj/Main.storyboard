@@ -48,11 +48,18 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="HDz-Dr-o1o">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="8uO-uC-H9Y">
-                            <connections>
-                                <action selector="didTapAddGroupButton:" destination="BYZ-38-t0r" id="yQ1-Ts-heJ"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="8uO-uC-H9Y">
+                                <connections>
+                                    <action selector="didTapAddGroupButton:" destination="BYZ-38-t0r" id="yQ1-Ts-heJ"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="順位" id="JE8-nk-svs">
+                                <connections>
+                                    <action selector="didTapEditRankingButton:" destination="BYZ-38-t0r" id="tnz-7j-4VR"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="bOI-Dy-Yga" id="JAi-NW-d62"/>
