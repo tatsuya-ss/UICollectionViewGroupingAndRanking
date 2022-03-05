@@ -127,7 +127,8 @@ extension ViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let groupName = prefectureManager.temporaryGroups[indexPath.section].name
-        let alert = UIAlertController(title: "\(groupName)からの移動", message: nil, preferredStyle: .alert)
+        let didSelectPrefectureName = prefectureManager.getCurrentPrefecture(index: indexPath).name
+        let alert = UIAlertController(title: "\(groupName)から\(didSelectPrefectureName)を移動", message: nil, preferredStyle: .alert)
         prefectureManager.temporaryGroups.forEach { (group: Group) -> Void in alert.addAction(UIAlertAction(title: group.name, style: .default, handler: { [weak self] _ in
             guard let updataPrefectures = self?.prefectureManager.updataPrefecture(indexPath: indexPath, group: group) else { return }
             self?.updateDataSource(prefecturesByRegion: updataPrefectures)

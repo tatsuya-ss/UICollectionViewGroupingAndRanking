@@ -58,6 +58,10 @@ struct PrefectureManager {
     private var currentPrefectures: [[Prefecture]] = [[]]
     var temporaryGroups: [Group] = []
     
+    func getCurrentPrefecture(index: IndexPath) -> Prefecture {
+        currentPrefectures[index.section][index.item]
+    }
+    
     mutating func addGroups(group: Group) -> [[Prefecture]] {
         temporaryGroups.append(group)
         let currentPrefecturesFlatMepped = currentPrefectures.flatMap { $0 }
