@@ -10,6 +10,7 @@ import UIKit
 final class ViewController: UIViewController {
     
     @IBOutlet private weak var collectionView: UICollectionView!
+    @IBOutlet private weak var rankingButton: UIBarButtonItem!
     
     private var dataSource: UICollectionViewDiffableDataSource<Group, Prefecture>! = nil
     private var prefectureManager = PrefectureUseCase()
@@ -38,6 +39,7 @@ final class ViewController: UIViewController {
     
     @IBAction func didTapEditRankingButton(_ sender: Any) {
         isEditRanking.toggle()
+        rankingButton.title = isEditRanking ? "順位を更新" : "順位を付ける"
         let isHidden = isEditRanking ? false : true
         prefectureManager.sortByRanking()
         let currentPrefectures = prefectureManager.changeIsHiddenAndReturnPrefectures(isHidden: isHidden)

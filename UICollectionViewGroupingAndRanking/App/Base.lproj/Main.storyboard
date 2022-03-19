@@ -54,7 +54,7 @@
                                     <action selector="didTapAddGroupButton:" destination="BYZ-38-t0r" id="yQ1-Ts-heJ"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem title="順位" id="JE8-nk-svs">
+                            <barButtonItem title="順位を付ける" id="JE8-nk-svs">
                                 <connections>
                                     <action selector="didTapEditRankingButton:" destination="BYZ-38-t0r" id="tnz-7j-4VR"/>
                                 </connections>
@@ -63,6 +63,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="bOI-Dy-Yga" id="JAi-NW-d62"/>
+                        <outlet property="rankingButton" destination="JE8-nk-svs" id="U1u-UR-uSE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
