@@ -59,9 +59,17 @@ final class PrefectureUseCase {
     }
     
     func updataPrefecture(indexPath: IndexPath, group: Group) ->  [[Prefecture]] {
-        currentPrefectures[indexPath.section][indexPath.row].group = group
+        if currentPrefectures[indexPath.section][indexPath.item].group != group {
+            // 別グループに移動するためランキングを消す
+            deleteRanking(indexPath: indexPath)
+        }
+        currentPrefectures[indexPath.section][indexPath.item].group = group
         updateCurrentPrefectures()
         return currentPrefectures
+    }
+    
+    private func deleteRanking(indexPath: IndexPath) {
+        currentPrefectures[indexPath.section][indexPath.item].rank = nil
     }
     
     private func updateCurrentPrefectures() {
