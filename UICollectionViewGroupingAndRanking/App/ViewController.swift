@@ -63,10 +63,14 @@ extension ViewController: UICollectionViewDelegate {
             )
             prefectureManager.temporaryGroups.forEach { (group: Group) -> Void in
                 alert.addAction(UIAlertAction(title: group.name, style: .default, handler: { [weak self] _ in
-                guard let updataPrefectures = self?.prefectureManager.updataPrefecture(indexPath: indexPath, group: group)
-                    else { return }
-                self?.updateDataSource(prefecturesByRegion: updataPrefectures)
-            })) }
+                    self?.prefectureManager.updataPrefecture(
+                        indexPath: indexPath,
+                        group: group
+                    )
+                    self?.prefectureManager.sortByRanking()
+                    guard let prefectures = self?.prefectureManager.currentPrefectures else { return }
+                    self?.updateDataSource(prefecturesByRegion: prefectures)
+                })) }
             present(alert, animated: true, completion: nil)
         }
     }
