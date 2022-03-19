@@ -18,14 +18,15 @@ final class PrefectureRepositoryImpl: PrefectureRepository {
 private extension Prefecture {
     init(prefectureData: PrefectureData) {
         self = Prefecture(name: prefectureData.name,
-                          group: Group(groupData: prefectureData.group))
+                          group: Group(groupData: prefectureData.group),
+                          ID: prefectureData.ID,
+                          rank: prefectureData.rank)
     }
 }
 
 private extension Group {
     init(groupData: GroupData) {
         self = Group(ID: groupData.ID,
-                     name: groupData.name,
-                     rank: groupData.rank)
+                     name: groupData.name)
     }
 }

@@ -39,8 +39,36 @@ final class ViewController: UIViewController {
     @IBAction func didTapEditRankingButton(_ sender: Any) {
         isEditRanking.toggle()
         let isHidden = isEditRanking ? false : true
+        prefectureManager.sortByRanking()
         let currentPrefectures = prefectureManager.changeIsHiddenAndReturnPrefectures(isHidden: isHidden)
         updateDataSource(prefecturesByRegion: currentPrefectures)
+    }
+    
+}
+
+// MARK: - UICollectionViewDelegate
+extension ViewController: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if isEditRanking {
+            prefectureManager.changeRanking(indexPath: indexPath)
+            updateDataSource(prefecturesByRegion: prefectureManager.currentPrefectures)
+        } else {
+            let groupName = prefectureManager.temporaryGroups[indexPath.section].name
+            let didSelectPrefectureName = prefectureManager.getCurrentPrefecture(index: indexPath).name
+            let alert = UIAlertController(
+                title: "\(groupName)から\(didSelectPrefectureName)を移動",
+                message: nil,
+                preferredStyle: .alert
+            )
+            prefectureManager.temporaryGroups.forEach { (group: Group) -> Void in
+                alert.addAction(UIAlertAction(title: group.name, style: .default, handler: { [weak self] _ in
+                guard let updataPrefectures = self?.prefectureManager.updataPrefecture(indexPath: indexPath, group: group)
+                    else { return }
+                self?.updateDataSource(prefecturesByRegion: updataPrefectures)
+            })) }
+            present(alert, animated: true, completion: nil)
+        }
     }
     
 }
@@ -76,7 +104,12 @@ extension ViewController {
                     for: indexPath
                 ) as? CollectionViewCell
                 else { fatalError("CollectionViewCellが見つかりませんでした。") }
-                cell.configure(title: itemIdentifier.name, isHiddenRank: itemIdentifier.isHiddenRanking)
+                let isHiddenRank = itemIdentifier.rank == nil
+                cell.configure(
+                    title: itemIdentifier.name,
+                    isHiddenRank: isHiddenRank,
+                    rank: itemIdentifier.rank
+                )
                 return cell
             })
         
@@ -130,18 +163,3 @@ extension ViewController {
     
 }
 
-// MARK: - UICollectionViewDelegate
-extension ViewController: UICollectionViewDelegate {
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let groupName = prefectureManager.temporaryGroups[indexPath.section].name
-        let didSelectPrefectureName = prefectureManager.getCurrentPrefecture(index: indexPath).name
-        let alert = UIAlertController(title: "\(groupName)から\(didSelectPrefectureName)を移動", message: nil, preferredStyle: .alert)
-        prefectureManager.temporaryGroups.forEach { (group: Group) -> Void in alert.addAction(UIAlertAction(title: group.name, style: .default, handler: { [weak self] _ in
-            guard let updataPrefectures = self?.prefectureManager.updataPrefecture(indexPath: indexPath, group: group) else { return }
-            self?.updateDataSource(prefecturesByRegion: updataPrefectures)
-        })) }
-        present(alert, animated: true, completion: nil)
-    }
-    
-}

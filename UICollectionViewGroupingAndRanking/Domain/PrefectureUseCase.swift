@@ -27,7 +27,8 @@ final class PrefectureUseCase {
         }
     }
     
-    private var currentPrefectures: [[Prefecture]] = [[]]
+    // prefecturesByGroupが読み取り専用なので保持する用
+    private(set) var currentPrefectures: [[Prefecture]] = [[]]
     var temporaryGroups: [Group] = []
     
     func getCurrentPrefecture(index: IndexPath) -> Prefecture {
@@ -72,6 +73,35 @@ final class PrefectureUseCase {
         }
         currentPrefectures = updataPrefecture
     }
+    
+    func changeRanking(indexPath: IndexPath) {
+        var rankingManager = RankingManager()
+        rankingManager.updateCurrentRankign(prefectures: currentPrefectures[indexPath.section])
+        let isRanked = currentPrefectures[indexPath.section][indexPath.item].rank != nil
+        if isRanked {
+            currentPrefectures[indexPath.section][indexPath.item].rank = nil
+        } else {
+            currentPrefectures[indexPath.section][indexPath.item].rank = rankingManager.currentRanking
+        }
+    }
+    
+    func sortByRanking() {
+        // 並び替え参考記事 https://qiita.com/mishimay/items/59fba10170ed2ff7690a
+        currentPrefectures = currentPrefectures.map { prefectures in
+            prefectures.sorted { l, r in
+                switch (l.rank, r.rank) {
+                case (.some(let l), .some(let r)):
+                    return l < r
+                case (.some, .none):
+                    return true
+                case (.none, .some):
+                    return false
+                case (.none, .none):
+                    return false
+                }
+            }
+        }
+    }
 }
 
 private extension Prefecture {
@@ -80,3 +110,19 @@ private extension Prefecture {
     }
 }
 
+struct RankingManager {
+    private(set) var currentRanking = 0
+    
+    private mutating func nextRanking() {
+        currentRanking += 1
+    }
+    
+    mutating func updateCurrentRankign(prefectures: [Prefecture]) {
+        prefectures.forEach {
+            guard let ranking = $0.rank else { return }
+            currentRanking = ranking > currentRanking
+            ? ranking : currentRanking
+        }
+        nextRanking()
+    }
+}

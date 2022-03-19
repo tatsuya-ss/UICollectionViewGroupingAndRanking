@@ -11,11 +11,12 @@ struct Prefecture: Hashable {
     let name: String
     var group: Group
     var isHiddenRanking: Bool = true
+    let ID: String
+    var rank: Int?
 }
 
 struct Group: Hashable {
     var ID: String
     var name: String
-    var rank: Int?
 }
 

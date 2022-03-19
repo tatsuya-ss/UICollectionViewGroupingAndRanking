@@ -11,7 +11,6 @@ import UIKit
 protocol Identifierable {
     static var identifier: String { get }
     static var nib: UINib { get }
-
 }
 
 extension Identifiable where Self: UICollectionViewCell {

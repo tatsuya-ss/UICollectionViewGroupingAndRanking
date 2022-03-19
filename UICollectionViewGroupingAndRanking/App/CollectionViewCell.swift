@@ -19,9 +19,10 @@ final class CollectionViewCell: UICollectionViewCell {
         layer.cornerRadius = 5
     }
     
-    func configure(title: String, isHiddenRank: Bool) {
+    func configure(title: String, isHiddenRank: Bool, rank: Int?) {
         titleLabel.text = title
         rankLabel.isHidden = isHiddenRank
+        rankLabel.text = String(rank ?? 0)
     }
 
 }

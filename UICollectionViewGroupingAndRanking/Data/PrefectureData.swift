@@ -12,7 +12,9 @@ struct PrefecturesData {
     let defaultGroup = GroupData(ID: UUID().uuidString, name: "デフォルト")
     var prefecturesData: [PrefectureData] {
         return prefectureNames.map {
-            PrefectureData(name: $0, group: defaultGroup)
+            PrefectureData(name: $0,
+                           group: defaultGroup,
+                           ID: UUID().uuidString)
         }
     }
 }
@@ -21,10 +23,11 @@ struct PrefectureData: Hashable {
     let name: String
     var group: GroupData
     var isHiddenRanking: Bool = true
+    let ID: String
+    var rank: Int?
 }
 
 struct GroupData: Hashable {
     var ID: String
     var name: String
-    var rank: Int?
 }
