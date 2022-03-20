@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		750BCC2E27E714030056681C /* Replacable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 750BCC2D27E714030056681C /* Replacable.swift */; };
 		754411CB27D35B0700DCC20B /* PrefectureData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754411CA27D35B0700DCC20B /* PrefectureData.swift */; };
 		754411CD27D3606500DCC20B /* PrefectureRepositoryImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754411CC27D3606500DCC20B /* PrefectureRepositoryImpl.swift */; };
 		754411CF27D3641500DCC20B /* Prefecture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754411CE27D3641500DCC20B /* Prefecture.swift */; };
@@ -26,6 +27,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		750BCC2D27E714030056681C /* Replacable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Replacable.swift; sourceTree = "<group>"; };
 		754411CA27D35B0700DCC20B /* PrefectureData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefectureData.swift; sourceTree = "<group>"; };
 		754411CC27D3606500DCC20B /* PrefectureRepositoryImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefectureRepositoryImpl.swift; sourceTree = "<group>"; };
 		754411CE27D3641500DCC20B /* Prefecture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prefecture.swift; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 			isa = PBXGroup;
 			children = (
 				75B30FCE27C20A820068B55D /* Identifierable.swift */,
+				750BCC2D27E714030056681C /* Replacable.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -210,6 +213,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				754411CB27D35B0700DCC20B /* PrefectureData.swift in Sources */,
+				750BCC2E27E714030056681C /* Replacable.swift in Sources */,
 				75B30FD227C21FE40068B55D /* PrefectureUseCase.swift in Sources */,
 				75B30FCF27C20A820068B55D /* Identifierable.swift in Sources */,
 				754411CF27D3641500DCC20B /* Prefecture.swift in Sources */,

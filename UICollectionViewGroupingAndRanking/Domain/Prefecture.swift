@@ -7,16 +7,30 @@
 
 import Foundation
 
+extension Prefecture: Identifiable {}
+extension Prefecture: Replacable {}
+
 struct Prefecture: Hashable {
     let name: String
     var group: Group
     var isHiddenRanking: Bool = true
-    let ID: String
+    let id: String
     var rank: Int?
 }
 
 struct Group: Hashable {
-    var ID: String
+    var id: String
     var name: String
 }
 
+extension Array where Element: Replacable, Element: Identifiable {
+    func replacing<T>(id: Element.ID,
+                      keyPath: WritableKeyPath<Element, T>,
+                      newValue: T) -> Self {
+        map {
+            $0.id == id
+            ? $0.replacing(keyPath: keyPath, newValue: newValue)
+            : $0
+        }
+    }
+}

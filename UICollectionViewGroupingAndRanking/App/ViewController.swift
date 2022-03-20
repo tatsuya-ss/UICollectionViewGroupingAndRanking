@@ -13,15 +13,15 @@ final class ViewController: UIViewController {
     @IBOutlet private weak var rankingButton: UIBarButtonItem!
     
     private var dataSource: UICollectionViewDiffableDataSource<Group, Prefecture>! = nil
-    private var prefectureManager = PrefectureUseCase()
+    private var prefectureUseCase = PrefectureUseCase()
     private var isEditRanking: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupNavigation()
-        prefectureManager.initialCurrentPrefecture()
-        prefectureManager.initialTemporaryGroup()
+        prefectureUseCase.initialCurrentPrefecture()
+        prefectureUseCase.initialTemporaryGroup()
         configureHierarchy()
         configureDataSource()
         initialDataSource()
@@ -31,7 +31,7 @@ final class ViewController: UIViewController {
     @IBAction func didTapAddGroupButton(_ sender: Any) {
         let addGroupVC = AddGroupViewController.instantiate()
         addGroupVC.makeGroup(createGroup: { [weak self] group in
-            let updataPrefectures = self?.prefectureManager.addGroups(group: group)
+            let updataPrefectures = self?.prefectureUseCase.addGroups(group: group)
             self?.updateDataSource(prefecturesByRegion: updataPrefectures ?? [[]])
         })
         present(addGroupVC, animated: true, completion: nil)
@@ -41,8 +41,8 @@ final class ViewController: UIViewController {
         isEditRanking.toggle()
         rankingButton.title = isEditRanking ? "順位を更新" : "順位を付ける"
         let isHidden = isEditRanking ? false : true
-        prefectureManager.sortByRanking()
-        let currentPrefectures = prefectureManager.changeIsHiddenAndReturnPrefectures(isHidden: isHidden)
+        prefectureUseCase.sortByRanking()
+        let currentPrefectures = prefectureUseCase.changeIsHiddenAndReturnPrefectures(isHidden: isHidden)
         updateDataSource(prefecturesByRegion: currentPrefectures)
     }
     
@@ -53,24 +53,24 @@ extension ViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if isEditRanking {
-            prefectureManager.changeRanking(indexPath: indexPath)
-            updateDataSource(prefecturesByRegion: prefectureManager.currentPrefectures)
+            prefectureUseCase.changeRanking(indexPath: indexPath)
+            updateDataSource(prefecturesByRegion: prefectureUseCase.currentPrefectures)
         } else {
-            let groupName = prefectureManager.temporaryGroups[indexPath.section].name
-            let didSelectPrefectureName = prefectureManager.getCurrentPrefecture(index: indexPath).name
+            let groupName = prefectureUseCase.temporaryGroups[indexPath.section].name
+            let didSelectPrefectureName = prefectureUseCase.getCurrentPrefecture(index: indexPath).name
             let alert = UIAlertController(
                 title: "\(groupName)から\(didSelectPrefectureName)を移動",
                 message: nil,
                 preferredStyle: .alert
             )
-            prefectureManager.temporaryGroups.forEach { (group: Group) -> Void in
+            prefectureUseCase.temporaryGroups.forEach { (group: Group) -> Void in
                 alert.addAction(UIAlertAction(title: group.name, style: .default, handler: { [weak self] _ in
-                    self?.prefectureManager.updataPrefecture(
+                    self?.prefectureUseCase.updataPrefecture(
                         indexPath: indexPath,
                         group: group
                     )
-                    self?.prefectureManager.sortByRanking()
-                    guard let prefectures = self?.prefectureManager.currentPrefectures else { return }
+                    self?.prefectureUseCase.sortByRanking()
+                    guard let prefectures = self?.prefectureUseCase.currentPrefectures else { return }
                     self?.updateDataSource(prefecturesByRegion: prefectures)
                 })) }
             present(alert, animated: true, completion: nil)
@@ -84,7 +84,7 @@ extension ViewController {
     
     private func updateDataSource(prefecturesByRegion: [[Prefecture]]) {
         var snapshot = NSDiffableDataSourceSnapshot<Group, Prefecture>()
-        let group = prefectureManager.temporaryGroups
+        let group = prefectureUseCase.temporaryGroups
         group.forEach {
             snapshot.appendSections([$0])
         }
@@ -97,7 +97,7 @@ extension ViewController {
     }
     
     private func initialDataSource() {
-        let prefecturesByRegion = prefectureManager.prefecturesByGroup
+        let prefecturesByRegion = prefectureUseCase.prefecturesByGroup
         updateDataSource(prefecturesByRegion: prefecturesByRegion)
     }
     
@@ -120,7 +120,7 @@ extension ViewController {
             })
         
         let supplementaryRegistration = UICollectionView.SupplementaryRegistration<TitleSupplementaryView>(elementKind: "header-element-kind") { supplementaryView, elementKind, indexPath in
-            let groupName = self.prefectureManager.temporaryGroups[indexPath.section].name
+            let groupName = self.prefectureUseCase.temporaryGroups[indexPath.section].name
             supplementaryView.label.text = groupName
         }
         

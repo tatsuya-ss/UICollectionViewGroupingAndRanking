@@ -22,7 +22,7 @@ final class PrefectureUseCase {
     var prefecturesByGroup: [[Prefecture]] {
         groups.map { group in
             prefectures.filter { prefecture in
-                prefecture.group.ID == group.ID
+                prefecture.group.id == group.id
             }
         }
     }
@@ -83,12 +83,18 @@ final class PrefectureUseCase {
     
     func changeRanking(indexPath: IndexPath) {
         var rankingManager = RankingManager()
-        rankingManager.updateCurrentRankign(prefectures: currentPrefectures[indexPath.section])
+        rankingManager.updateCurrentRanking(prefectures: currentPrefectures[indexPath.section])
+        // 表示用のViewObjectとか作成したらid渡すだけでいけそう
+        let id = currentPrefectures[indexPath.section][indexPath.item].id
         let isRanked = currentPrefectures[indexPath.section][indexPath.item].rank != nil
         if isRanked {
-            currentPrefectures[indexPath.section][indexPath.item].rank = nil
+            currentPrefectures = currentPrefectures.map {
+                $0.replacing(id: id, keyPath: \.rank, newValue: nil)
+            }
         } else {
-            currentPrefectures[indexPath.section][indexPath.item].rank = rankingManager.currentRanking
+            currentPrefectures = currentPrefectures.map {
+                $0.replacing(id: id, keyPath: \.rank, newValue: rankingManager.currentRanking)
+            }
         }
     }
     
@@ -124,7 +130,7 @@ struct RankingManager {
         currentRanking += 1
     }
     
-    mutating func updateCurrentRankign(prefectures: [Prefecture]) {
+    mutating func updateCurrentRanking(prefectures: [Prefecture]) {
         prefectures.forEach {
             guard let ranking = $0.rank else { return }
             currentRanking = ranking > currentRanking

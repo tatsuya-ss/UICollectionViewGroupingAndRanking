@@ -19,7 +19,7 @@ final class AddGroupViewController: UIViewController {
     }
     
     @IBAction func didTapCreateGroupButton(_ sender: Any) {
-        createGroupHandler(Group(ID: UUID().uuidString,
+        createGroupHandler(Group(id: UUID().uuidString,
                                  name: groupNameTextField.text ?? ""))
         dismiss(animated: true, completion: nil)
     }

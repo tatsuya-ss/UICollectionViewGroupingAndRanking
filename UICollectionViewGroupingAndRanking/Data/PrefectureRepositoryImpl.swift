@@ -19,14 +19,14 @@ private extension Prefecture {
     init(prefectureData: PrefectureData) {
         self = Prefecture(name: prefectureData.name,
                           group: Group(groupData: prefectureData.group),
-                          ID: prefectureData.ID,
+                          id: prefectureData.ID,
                           rank: prefectureData.rank)
     }
 }
 
 private extension Group {
     init(groupData: GroupData) {
-        self = Group(ID: groupData.ID,
+        self = Group(id: groupData.ID,
                      name: groupData.name)
     }
 }
