@@ -40,10 +40,8 @@ final class ViewController: UIViewController {
     @IBAction func didTapEditRankingButton(_ sender: Any) {
         isEditRanking.toggle()
         rankingButton.title = isEditRanking ? "順位を更新" : "順位を付ける"
-        let isHidden = isEditRanking ? false : true
         prefectureUseCase.sortByRanking()
-        let currentPrefectures = prefectureUseCase.changeIsHiddenAndReturnPrefectures(isHidden: isHidden)
-        updateDataSource(prefecturesByRegion: currentPrefectures)
+        updateDataSource(prefecturesByRegion: prefectureUseCase.currentPrefectures)
     }
     
 }

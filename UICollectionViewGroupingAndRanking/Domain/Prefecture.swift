@@ -13,7 +13,6 @@ extension Prefecture: Replacable {}
 struct Prefecture: Hashable {
     let name: String
     var group: Group
-    var isHiddenRanking: Bool = true
     let id: String
     var rank: Int?
 }

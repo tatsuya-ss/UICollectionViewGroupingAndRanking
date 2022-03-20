@@ -35,15 +35,6 @@ final class PrefectureUseCase {
         currentPrefectures[index.section][index.item]
     }
     
-    func changeIsHiddenAndReturnPrefectures(isHidden: Bool) -> [[Prefecture]] {
-        for prefecturesCount in 0..<currentPrefectures.count {
-            for prefectureCount in 0..<currentPrefectures[prefecturesCount].count {
-                currentPrefectures[prefecturesCount][prefectureCount].changeIsHidden(isHidden: isHidden)
-            }
-        }
-        return currentPrefectures
-    }
-    
     func initialCurrentPrefecture() {
         currentPrefectures = prefecturesByGroup
     }
@@ -114,12 +105,6 @@ final class PrefectureUseCase {
                 }
             }
         }
-    }
-}
-
-private extension Prefecture {
-    mutating func changeIsHidden(isHidden: Bool) {
-        isHiddenRanking = isHidden
     }
 }
 
