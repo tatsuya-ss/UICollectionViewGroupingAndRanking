@@ -79,6 +79,7 @@ final class PrefectureUseCase {
         let id = currentPrefectures[indexPath.section][indexPath.item].id
         let isRanked = currentPrefectures[indexPath.section][indexPath.item].rank != nil
         if isRanked {
+            // TODO: mapしてcurrentPrefecturesに入れる作業を2回やるの微妙
             currentPrefectures = currentPrefectures.map { prefectures in
                 prefectures.map {
                     shiftRanking(prefecture: $0, indexPath: indexPath)
@@ -98,10 +99,8 @@ final class PrefectureUseCase {
         guard let rank = prefecture.rank,
               let deleteRanking = currentPrefectures[indexPath.section][indexPath.item].rank
         else { return prefecture }
-        if rank > deleteRanking {
-            return prefecture.replacing(keyPath: \.rank, newValue: rank - 1)
-        }
-        return prefecture
+        let shiftedRank = RankingManager().getShiftedRank(deleteRank: deleteRanking, currentRank: rank)
+        return prefecture.replacing(keyPath: \.rank, newValue: shiftedRank)
     }
     
     func sortByRanking() {
@@ -137,5 +136,12 @@ struct RankingManager {
             ? ranking : currentRanking
         }
         nextRanking()
+    }
+    
+    func getShiftedRank(deleteRank: Int, currentRank: Int) -> Int {
+        if currentRank > deleteRank {
+            return currentRank - 1
+        }
+        return currentRank
     }
 }
