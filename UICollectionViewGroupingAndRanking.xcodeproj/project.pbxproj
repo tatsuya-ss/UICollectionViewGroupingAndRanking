@@ -14,7 +14,7 @@
 		754411D127D3648E00DCC20B /* PrefectureRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 754411D027D3648E00DCC20B /* PrefectureRepository.swift */; };
 		75B30FB527C1FE090068B55D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75B30FB427C1FE090068B55D /* AppDelegate.swift */; };
 		75B30FB727C1FE090068B55D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75B30FB627C1FE090068B55D /* SceneDelegate.swift */; };
-		75B30FB927C1FE090068B55D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75B30FB827C1FE090068B55D /* ViewController.swift */; };
+		75B30FB927C1FE090068B55D /* PrefectureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75B30FB827C1FE090068B55D /* PrefectureViewController.swift */; };
 		75B30FBC27C1FE090068B55D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 75B30FBA27C1FE090068B55D /* Main.storyboard */; };
 		75B30FBE27C1FE0A0068B55D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 75B30FBD27C1FE0A0068B55D /* Assets.xcassets */; };
 		75B30FC127C1FE0A0068B55D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 75B30FBF27C1FE0A0068B55D /* LaunchScreen.storyboard */; };
@@ -35,7 +35,7 @@
 		75B30FB127C1FE090068B55D /* UICollectionViewGroupingAndRanking.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UICollectionViewGroupingAndRanking.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		75B30FB427C1FE090068B55D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		75B30FB627C1FE090068B55D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		75B30FB827C1FE090068B55D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		75B30FB827C1FE090068B55D /* PrefectureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefectureViewController.swift; sourceTree = "<group>"; };
 		75B30FBB27C1FE090068B55D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		75B30FBD27C1FE0A0068B55D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		75B30FC027C1FE0A0068B55D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -59,6 +59,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		750BCC2F27E85E0D0056681C /* Prefecture */ = {
+			isa = PBXGroup;
+			children = (
+				75B30FB827C1FE090068B55D /* PrefectureViewController.swift */,
+				75B30FBA27C1FE090068B55D /* Main.storyboard */,
+				75B30FC927C2099E0068B55D /* CollectionViewCell.swift */,
+				75B30FCA27C2099E0068B55D /* CollectionViewCell.xib */,
+				75B30FD327C2329E0068B55D /* TitleSupplementaryView.swift */,
+			);
+			path = Prefecture;
+			sourceTree = "<group>";
+		};
 		75B30FA827C1FE090068B55D = {
 			isa = PBXGroup;
 			children = (
@@ -94,11 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				75B30FCD27C209C00068B55D /* Protocol */,
-				75B30FB827C1FE090068B55D /* ViewController.swift */,
-				75B30FBA27C1FE090068B55D /* Main.storyboard */,
-				75B30FC927C2099E0068B55D /* CollectionViewCell.swift */,
-				75B30FCA27C2099E0068B55D /* CollectionViewCell.xib */,
-				75B30FD327C2329E0068B55D /* TitleSupplementaryView.swift */,
+				750BCC2F27E85E0D0056681C /* Prefecture */,
 				75EAA0CC27CB0F2D00AFAB88 /* AddGroup */,
 			);
 			path = App;
@@ -217,7 +225,7 @@
 				75B30FD227C21FE40068B55D /* PrefectureUseCase.swift in Sources */,
 				75B30FCF27C20A820068B55D /* Identifierable.swift in Sources */,
 				754411CF27D3641500DCC20B /* Prefecture.swift in Sources */,
-				75B30FB927C1FE090068B55D /* ViewController.swift in Sources */,
+				75B30FB927C1FE090068B55D /* PrefectureViewController.swift in Sources */,
 				75B30FD427C2329E0068B55D /* TitleSupplementaryView.swift in Sources */,
 				754411D127D3648E00DCC20B /* PrefectureRepository.swift in Sources */,
 				75EAA0CB27CB0DD800AFAB88 /* AddGroupViewController.swift in Sources */,

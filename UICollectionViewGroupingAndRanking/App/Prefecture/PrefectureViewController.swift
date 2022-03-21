@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class ViewController: UIViewController {
+final class PrefectureViewController: UIViewController {
     
     @IBOutlet private weak var collectionView: UICollectionView!
     @IBOutlet private weak var rankingButton: UIBarButtonItem!
@@ -47,7 +47,7 @@ final class ViewController: UIViewController {
 }
 
 // MARK: - UICollectionViewDelegate
-extension ViewController: UICollectionViewDelegate {
+extension PrefectureViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if isEditRanking {
@@ -78,7 +78,7 @@ extension ViewController: UICollectionViewDelegate {
 }
 
 // MARK: - func
-extension ViewController {
+extension PrefectureViewController {
     
     private func updateDataSource(prefecturesByRegion: [[Prefecture]]) {
         var snapshot = NSDiffableDataSourceSnapshot<Group, Prefecture>()
