@@ -1,7 +1,10 @@
 # UICollectionViewGroupingAndRanking
+グループ分けとランキングの機能を実装するためのサンプルプロジェクトです。
 
 # 動作
-### グループ分けの段階
+### グループ分け
+https://user-images.githubusercontent.com/72326299/159229230-7fd2ba4c-f7b4-4248-ba9b-1070b60d55c7.mov 
 
-https://user-images.githubusercontent.com/72326299/154835020-ecff9d32-f7f4-4670-9676-c7c2351f4378.MOV
+### ランキング
+https://user-images.githubusercontent.com/72326299/159229309-2bab6b0d-768e-490c-ba45-3923a2992d2e.mov
 
