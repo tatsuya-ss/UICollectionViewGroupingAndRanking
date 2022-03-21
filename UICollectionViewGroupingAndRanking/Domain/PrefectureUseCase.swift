@@ -80,10 +80,13 @@ final class PrefectureUseCase {
         let isRanked = currentPrefectures[indexPath.section][indexPath.item].rank != nil
         if isRanked {
             // TODO: mapしてcurrentPrefecturesに入れる作業を2回やるの微妙
-            currentPrefectures = currentPrefectures.map { prefectures in
-                prefectures.map {
-                    shiftRanking(prefecture: $0, indexPath: indexPath)
+            currentPrefectures = currentPrefectures.enumerated().map { prefectures in
+                if prefectures.offset == indexPath.section {
+                    return prefectures.element.map {
+                        shiftRanking(prefecture: $0, indexPath: indexPath)
+                    }
                 }
+                return prefectures.element
             }
             currentPrefectures = currentPrefectures.map {
                 $0.replacing(id: id, keyPath: \.rank, newValue: nil)
